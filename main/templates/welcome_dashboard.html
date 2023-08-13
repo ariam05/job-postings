@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="/logout">Log Out</a> <button><a href="/jobs/new">New Job</a></button>
+    <h1>Hello {{logged_in_user.f_name}}!</h1>
+    <h3>Everyone's jobs:</h3>
+    <table>
+        <thead>
+            <th>Job</th>
+            <th>Location</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            {% for job in all_jobs %}
+            <tr>
+                <td>{{job.title}}</td>
+                <td>{{job.location}}</td>
+                {% if logged_in_user.f_name != job.submitted_by.f_name %}
+                <td><a href="jobs/{{job.id}}">View</a></td>
+                {% endif %}
+                {% if logged_in_user.f_name == job.submitted_by.f_name %}
+                <td><a href="jobs/{{job.id}}">View</a> | <a href="/jobs/edit/{{job.id}}">Edit</a> | <a href="/jobs/delete/{{job.id}}">Remove</a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

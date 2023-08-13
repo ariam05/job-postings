@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello {{logged_in_user.f_name}}! Create a Job!</h1>
+    <form action="/process_new_job" method="post">
+        {% csrf_token %}
+        <br><label for="title">Title</label>
+        <input type="text" name="title" id="title">
+        <br><label for="description">Description</label>
+        <input type="text" name="description" id="description">
+        <br><label for="location">Location</label>
+        <input type="text" name="location" id="location">
+        <input type="hidden" name="user_id" value="{{logged_in_user.id}}">
+        <br><button><a href="/dashboard">Cancel</a></button> <button type="submit">Submit</button>
+    </form>
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{message}}</li>
+        {% endfor %}
+    </ul><br>
+    {% endif %}
+    </form>
+</body>
+</html>

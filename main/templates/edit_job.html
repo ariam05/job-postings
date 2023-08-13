@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="/logout">Logout</a>
+    <h1>Hello {{logged_in_user.f_name}}! Let's edit your job!</h1>
+    <form action="/update_job_process" method="post">
+    {% csrf_token %}
+    <label for="title">Title</label>
+    <input type="text" name="title" id="title" value="{{edit_job.title}}"><br>
+    <br><label for="description">Description</label>
+    <textarea name="description" id="description" cols="25" rows="5">{{edit_job.description}}</textarea><br>
+    <label for="location">Location</label>
+    <input type="text" name="location" id="location" value="{{edit_job.location}}"><br>
+    <input type="hidden" name="job_id" value="{{edit_job.id}}"> 
+    <br><button>Submit</button> <button><a href="/dashboard">Cancel</a></button>
+    <!-- to reference job on backend -->
+    </form>
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{message}}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</body>
+</html>

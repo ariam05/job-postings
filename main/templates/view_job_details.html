@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="/dashboard">Dashboard</a> <a href="/logout">Log Out</a>
+    <h1>Hello {{logged_in_user.f_name}}! These are the job details!</h1><br>
+
+    <h3>{{selected_job.title}}</h3>
+    <h3>{{selected_job.description}}</h3>
+    <h3>{{selected_job.location}}</h3>
+    <h3>{{selected_job.submitted_by.f_name}}</h3>
+    <h3>{{selected_job.created_at}}</h3>
+
+</body>
+</html>
