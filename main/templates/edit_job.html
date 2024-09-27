@@ -3,29 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Edit Job</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <strong><a class="navbar-brand" href="#">{{ logged_in_user.f_name }} {{ logged_in_user.l_name }}</a></strong>
+        <div class="d-flex">
+            <a class="btn btn-outline-success mr-2" href="/jobs/new">Post New Job</a>
+            <a href="/logout" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
+</nav>
 <body>
-    <a href="/logout">Logout</a>
-    <h1>Hello {{logged_in_user.f_name}}! Let's edit your job!</h1>
-    <form action="/update_job_process" method="post">
-    {% csrf_token %}
-    <label for="title">Title</label>
-    <input type="text" name="title" id="title" value="{{edit_job.title}}"><br>
-    <br><label for="description">Description</label>
-    <textarea name="description" id="description" cols="25" rows="5">{{edit_job.description}}</textarea><br>
-    <label for="location">Location</label>
-    <input type="text" name="location" id="location" value="{{edit_job.location}}"><br>
-    <input type="hidden" name="job_id" value="{{edit_job.id}}"> 
-    <br><button>Submit</button> <button><a href="/dashboard">Cancel</a></button>
-    <!-- to reference job on backend -->
-    </form>
-    {% if messages %}
-    <ul>
-        {% for message in messages %}
-        <li>{{message}}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
+    <div class="container mt-5">
+
+        <h3 class="text-center mt-4">Let's edit your job!</h3>
+
+        <form action="/update_job_process" method="post" class="mt-4">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" name="title" id="title" value="{{ edit_job.title }}">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" name="description" id="description" cols="30" rows="5">{{ edit_job.description }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" class="form-control" name="location" id="location" value="{{ edit_job.location }}">
+            </div>
+
+            <input type="hidden" name="job_id" value="{{ edit_job.id }}">
+
+            <div class="d-flex justify-content-between mt-4">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="/dashboard" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+
+        {% if messages %}
+        <div class="alert alert-danger mt-3">
+            <ul>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -3,47 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sign In</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+        }
+        h2, h4 {
+            color: #343a40;
+            text-align: center;
+            font-weight: 600;
+        }
+        h4 {
+            margin-bottom: 20px;
+            padding-top: 20px;
+        }
+        .form-label {
+            font-weight: 500;
+            color: #495057;
+        }
+        .form-control {
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 14px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        .messages {
+            color: #dc3545;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome! Sign in to manage your jobs!</h1>
-    <h2>Register</h2>
-    <form action="/process_registration" method="post">
-        {% csrf_token %}
-        <br><label for="f_name">First Name</label>
-        <input type="text" name="f_name" id="f_name">
-        <br><label for="l_name">Last Name</label>
-        <input type="text" name="l_name" id="l_name">
-        <br><label for="email">Email</label>
-        <input type="text" name="email" id="email">
-        <br><label for="password">Password</label>
-        <input type="password" name="password" id="password">
-        <br><label for="confirm_password">Confirm Password</label>
-        <input type="password" name="confirm_password" id="confirm_password"><br>
-        <br><button type="submit">Register</button>
-    </form>
-    {% if messages %}
-    <ul>
-        {% for message in messages %}
-        <li>{{message}}</li>
-        {% endfor %}
-    </ul><br>
-    {% endif %}
-    <h2>Login</h2>
-    <form action="/process_login" method="post">
-        {% csrf_token %}
-        <label for="email">Email</label>
-        <input type="text" name="email" id="email">
-        <br><label for="password">Password</label>
-        <input type="password" name="password" id="password"><br>
-        <br><button>Login</button>
-    </form>
-    {% if messages %}
-    <ul>
-        {% for message in messages %}
-        <li>{{message}}</li>
-        {% endfor %}
-    </ul><br>
-    {% endif %}
+
+    <div class="container">
+        <h2>Sign in to manage your jobs</h2>
+
+        <!-- Display Error Messages -->
+        {% if messages %}
+            <div class="alert alert-danger mt-3">
+                <ul style="list-style-type: none; padding-left: 0;">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <!-- Registration Form -->
+        <h4>Register</h4>
+        <form action="/process_registration" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="f_name" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="f_name" name="f_name" required>
+            </div>
+            <div class="mb-3">
+                <label for="l_name" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="l_name" name="l_name" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <div class="mb-3">
+                <label for="confirm_password" class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+
+        <h4>Login</h4>
+        <form action="/process_login" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-success">Login</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

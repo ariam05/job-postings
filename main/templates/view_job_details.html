@@ -3,17 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Job Details</title>
 </head>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <strong><a class="navbar-brand" href="#">{{ logged_in_user.f_name }} {{ logged_in_user.l_name }}</a></strong>
+        <div class="d-flex">
+            <a class="btn btn-outline-success mr-2" href="/jobs/new">Post New Job</a>
+            <a class="btn btn-danger" href="/logout">Log Out</a>
+        </div>
+    </div>
+</nav>
 <body>
-    <a href="/dashboard">Dashboard</a> <a href="/logout">Log Out</a>
-    <h1>Hello {{logged_in_user.f_name}}! These are the job details!</h1><br>
+    <div class="container mt-3">
+        <div class="d-flex justify-content-between">
+            <a class="btn btn-dark" href="/dashboard">Back</a>
+        </div>
 
-    <h3>{{selected_job.title}}</h3>
-    <h3>{{selected_job.description}}</h3>
-    <h3>{{selected_job.location}}</h3>
-    <h3>{{selected_job.submitted_by.f_name}}</h3>
-    <h3>{{selected_job.created_at}}</h3>
+        <h2 class="mt-4 text-center">Job Details For <span style="color: #3267a0;">{{ selected_job.title }}</span></h2>
+        <div class="card mt-4 shadow-lg" style="border-radius: 15px;">
+            <div class="card-body">
+                <h3 class="card-title text-center" style="color: #3267a0;">{{ selected_job.title }}</h3>
+                <p class="card-text"><strong>Description:</strong></p>
+                <p class="bg-light p-3 rounded" style="border-left: 5px solid #3267a0;">{{ selected_job.description }}</p>
+                <p class="card-text"><strong>Location:</strong> <span class="badge badge-info">{{ selected_job.location }}</span></p>
+                <p class="card-text"><strong>Submitted by:</strong> <span class="badge badge-info">{{ selected_job.submitted_by.f_name }} {{ selected_job.submitted_by.l_name }}</span></p>
+                <p class="card-text"><strong>Created At:</strong> <span >{{ selected_job.created_at }}</span></p>
+            </div>
+            <!-- {% if logged_in_user.f_name == job.submitted_by.f_name %}
+                            <a class="btn btn-outline-primary btn-sm ms-2" href="/jobs/edit/{{ job.id }}">Edit</a>
+                            <a class="btn btn-danger btn-sm ms-2" href="/jobs/delete/{{ job.id }}">Remove</a>
+                {% endif %} -->
+        </div>
+        <br>
+        <br>
+        <div>
+            {% if logged_in_user.f_name == selected_job.submitted_by.f_name %}
+            <a class="btn btn-outline-primary btn-sm ms-4" href="/jobs/edit/{{ selected_job.id }}">Edit</a>
+            <a class="btn btn-danger btn-sm ms-4" href="/jobs/delete/{{ selected_job.id }}">Remove</a>
+        {% endif %}
+        </div>
+        
 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

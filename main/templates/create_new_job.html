@@ -3,28 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Add Job</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Hello {{logged_in_user.f_name}}! Create a Job!</h1>
-    <form action="/process_new_job" method="post">
-        {% csrf_token %}
-        <br><label for="title">Title</label>
-        <input type="text" name="title" id="title">
-        <br><label for="description">Description</label>
-        <input type="text" name="description" id="description">
-        <br><label for="location">Location</label>
-        <input type="text" name="location" id="location">
-        <input type="hidden" name="user_id" value="{{logged_in_user.id}}">
-        <br><button><a href="/dashboard">Cancel</a></button> <button type="submit">Submit</button>
-    </form>
-    {% if messages %}
-    <ul>
-        {% for message in messages %}
-        <li>{{message}}</li>
-        {% endfor %}
-    </ul><br>
-    {% endif %}
-    </form>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand font-weight-bold" href="#">{{ logged_in_user.f_name }} {{ logged_in_user.l_name }}</a>
+            <div class="ml-auto">
+                <a class="btn btn-danger ml-2" href="/logout">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h3 class="text-center mb-4">Create a New Job</h3>
+
+        <form action="/process_new_job" method="post">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="title">Job Title</label>
+                <input type="text" class="form-control" name="title" id="title" placeholder="Enter job title">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Job Description</label>
+                <textarea class="form-control" name="description" id="description" rows="4" placeholder="Enter job description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="location">Job Location</label>
+                <input type="text" class="form-control" name="location" id="location" placeholder="Enter job location">
+            </div>
+
+            <input type="hidden" name="user_id" value="{{ logged_in_user.id }}">
+
+            <div class="d-flex justify-content-between mt-4">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="/dashboard" class="btn btn-secondary">Cancel</a>
+                
+            </div>
+        </form>
+
+        {% if messages %}
+        <div class="alert alert-danger mt-3">
+            <ul>
+                {% for message in messages %}
+                <li style="list-style-type: none; padding-left: 0;">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

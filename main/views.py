@@ -13,40 +13,53 @@ def register_user(request):
     return render(request, 'register.html', context)
 
 def process_registration(request):
+    # Check if the email already exists in the database
+    if User.objects.filter(email=request.POST['email']).exists():
+        messages.error(request, "The email you have provided is already associated with an account. Please login or reset your password")
+        return redirect('/')
+    
+    # Validate other fields
     errs = User.objects.user_validator(request.POST)
     if len(errs) > 0:
         for msg in errs.values():
             messages.error(request, msg)
         return redirect('/')
     else:
+        # Hash the password and create the user if no errors
         password = request.POST['password']
         hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
         print(password, "\n", hashed)
         user = User.objects.create(
-        f_name = request.POST['f_name'],
-        l_name = request.POST['l_name'],
-        email = request.POST['email'],
-        password = hashed, 
+            f_name=request.POST['f_name'],
+            l_name=request.POST['l_name'],
+            email=request.POST['email'],
+            password=hashed,
         )
         request.session['user_id'] = user.id
         return redirect('/dashboard')
+
 
 def process_login(request):
     errs = User.objects.login_validator(request.POST)
     if len(errs) > 0:
         for msg in errs.values():
-            messages.error(request, msg)
+            messages.error(request, msg) 
         return redirect('/')
     else:
         user_email = User.objects.filter(email=request.POST['email'])
         if user_email:
             logged_user = user_email[0]
+            # Verifying password
             if bcrypt.checkpw(request.POST['password'].encode(), logged_user.password.encode()):
                 request.session['user_id'] = logged_user.id 
                 return redirect('/dashboard')
             else:
-                messages.error(request, "Invalid Password!")
+                messages.error(request, "Invalid Email or Password")  # Display password error
+        else:
+            messages.error(request, "Invalid Email or Password")  # Handle case when email is not found
         return redirect('/')
+
+
 
 
 def welcome_page(request):
@@ -78,7 +91,6 @@ def process_new_job(request):
             submitted_by = User.objects.get(id=request.POST['user_id'])
             
         )
-        # request.session['user_id'] = user.id
         return redirect('/dashboard')
 
 
